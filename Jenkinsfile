@@ -65,3 +65,5 @@ pipeline {
           sshCommand remote: remote, command: "kubectl apply -f my-app-deployment.yml"
         }
     }
+    }
+}
