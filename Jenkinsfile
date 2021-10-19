@@ -50,5 +50,18 @@ pipeline {
                 } 
             }
         } 
+         stage("SSH Into k8s Server") {
+        def remote = [:]
+        remote.name = 'K8S master'
+        remote.host = 'host IP'
+        remote.user = 'sever username'
+        remote.password = 'server Password'
+        remote.allowAnyHosts = true
+
+        stage('Put my-app-deployment-into-k8s-master') {
+            sshPut remote: remote, from: 'my-app-deployment.yml', into: '.'
+        }
+              stage('Deploy spring boot') {
+          sshCommand remote: remote, command: "kubectl apply -f my-app-deployment.yml"
+        }
     }
-}
